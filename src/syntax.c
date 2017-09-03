@@ -140,3 +140,50 @@ void penny_expr_printf(penny_expr* expr) {
       break;
   }
 }
+
+void penny_list_free(penny_list* list) {
+  int i;
+  penny_list_node* x = list->hd;
+
+  for (i = 0; i < list->len; i++) {
+    penny_expr_free(x->value);
+    x = x->next;
+  }
+  free(list);
+}
+
+void penny_integer_free(penny_integer* integer) {
+  free(integer->value);
+  free(integer);
+}
+
+void penny_symbol_free(penny_symbol* symbol) {
+  free(symbol->value);
+  free(symbol);
+}
+
+void penny_string_free(penny_string* string) {
+  free(string->value);
+  free(string);
+}
+
+void penny_expr_free(penny_expr* expr) {
+  switch (expr->type) {
+    case PENNY_LIST:
+      penny_list_free(expr->value.list);
+      break;
+
+    case PENNY_INTEGER:
+      penny_integer_free(expr->value.integer);
+      break;
+
+    case PENNY_SYMBOL:
+      penny_symbol_free(expr->value.symbol);
+      break;
+
+    case PENNY_STRING:
+      penny_string_free(expr->value.string);
+      break;
+  }
+  free(expr);
+}

@@ -14,9 +14,9 @@ extern int yyparse(penny_expr** result);
 int main(int argc, char** argv) {
   penny_expr* expr;
   yyparse(&expr);
-  printf("%d\n", expr->type);
   penny_expr_printf(expr);
   printf("\n");
+  penny_expr_free(expr);
   /* printf("Hello, World!\n"); */
   return 0;
 }
