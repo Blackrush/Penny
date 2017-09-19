@@ -13,19 +13,12 @@
 struct penny_expr;
 typedef struct penny_expr penny_expr;
 
-typedef struct _penny_list_node {
+typedef struct __penny_list {
   penny_expr* value;
-  struct _penny_list_node* next;
-  struct _penny_list_node* previous;
-} penny_list_node;
-
-typedef struct {
-  unsigned int len;
-  penny_list_node* hd;
+  struct __penny_list* next;
 } penny_list;
 
-penny_list* penny_list_new(void);
-void penny_list_cons(penny_list* list, penny_expr* value);
+penny_list* penny_list_cons(penny_list* list, penny_expr* value);
 void penny_list_printf(penny_list* list);
 
 typedef struct {

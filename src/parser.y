@@ -39,7 +39,7 @@ expr: INTEGER { $$ = penny_expr_integer($1); }
     | LPAREN expr_list RPAREN { $$ = penny_expr_list($2); }
     ;
 
-expr_list: { $$ = penny_list_new(); }
-         | expr expr_list { $$ = $2; penny_list_cons($2, $1); }
+expr_list: { $$ = (void*)0; }
+         | expr expr_list { $$ = penny_list_cons($2, $1); }
          ;
 

@@ -10,36 +10,11 @@
 #include "string.h"
 #include "syntax.h"
 
-penny_list_node* penny_list_node_new(penny_expr* value) {
-  penny_list_node* node = (penny_list_node*) malloc(sizeof(penny_list_node));
-  node->value = value;
-  node->next = NULL;
-  node->previous = NULL; 
-  return node;
-}
-
-void penny_list_node_link(penny_list_node* left, penny_list_node* right) {
-  if (left != NULL) {
-    left->next = right;
-  }
-  if (right != NULL) {
-    right->previous = left;
-  }
-}
-
-penny_list* penny_list_new(void) {
-  penny_list* list = (penny_list*) malloc(sizeof(penny_list));
-  list->len = 0;
-  list->hd = NULL;
-  return list;
-}
-
-void penny_list_cons(penny_list* list, penny_expr* value) {
-  list->len++;
-  penny_list_node* hd = penny_list_node_new(value);
-  penny_list_node* old_hd = list->hd;
-  penny_list_node_link(hd, old_hd);
-  list->hd = hd;
+penny_list* penny_list_cons(penny_list* list, penny_expr* value) {
+  penny_list* res = (penny_list*) malloc(sizeof(penny_list));
+  res->value = value;
+  res->next = list;
+  return res;
 }
 
 penny_integer* penny_integer_new(char* value, int value_len) {
@@ -94,17 +69,14 @@ penny_expr* penny_expr_string(penny_string* string) {
 }
 
 void penny_list_printf(penny_list* list) {
-  int i;
-  penny_list_node* x = list->hd;
+  penny_list* it;
 
   printf("(");
-  for (i = 0; i < list->len; i++) {
-    penny_expr_printf(x->value);
-
-    if (x->next != NULL) {
+  for (it = list; it != NULL; it = it->next) {
+    if (it != list) {
       printf(" ");
     }
-    x = x->next;
+    penny_expr_printf(it->value);
   }
   printf(")");
 }
@@ -142,13 +114,10 @@ void penny_expr_printf(penny_expr* expr) {
 }
 
 void penny_list_free(penny_list* list) {
-  int i;
-  penny_list_node* x = list->hd;
-
-  for (i = 0; i < list->len; i++) {
-    penny_expr_free(x->value);
-    x = x->next;
+  if (list->next != NULL) {
+    penny_list_free(list->next);
   }
+  penny_expr_free(list->value);
   free(list);
 }
 
