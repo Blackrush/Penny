@@ -7,9 +7,9 @@
 
 #include "penny.h"
 #include "syntax.h"
+#include "formatter.h"
+#include "parser.h"
 #include "stdio.h"
-
-extern int yyparse(penny_expr** result);
 
 int main(int argc, char** argv) {
   penny_expr* expr;

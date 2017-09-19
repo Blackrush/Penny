@@ -19,7 +19,6 @@ typedef struct __penny_list {
 } penny_list;
 
 penny_list* penny_list_cons(penny_list* list, penny_expr* value);
-void penny_list_printf(penny_list* list);
 
 typedef struct {
   char* value;
@@ -28,21 +27,18 @@ typedef struct {
 } penny_integer;
 
 penny_integer* penny_integer_new(char* value, int value_len);
-void penny_integer_printf(penny_integer* integer);
 
 typedef struct {
   char* value;
 } penny_symbol;
 
 penny_symbol* penny_symbol_new(char* value, int value_len);
-void penny_symbol_printf(penny_symbol* symbol);
 
 typedef struct {
   char* value;
 } penny_string;
 
 penny_string* penny_string_new(char* value, int value_len);
-void penny_string_printf(penny_string* string);
 
 typedef enum {
   PENNY_LIST,
@@ -67,8 +63,6 @@ penny_expr* penny_expr_list(penny_list* list);
 penny_expr* penny_expr_integer(penny_integer* integer);
 penny_expr* penny_expr_symbol(penny_symbol* symbol);
 penny_expr* penny_expr_string(penny_string* string);
-
-void penny_expr_printf(penny_expr* expr);
 void penny_expr_free(penny_expr* expr);
 
 #endif /* !SYNTAX_H */

@@ -1,0 +1,9 @@
+{
+  "files.associations": {
+    "*.apib": "markdown",
+    "*.lex": "lex",
+    "formatter.h": "c",
+    "syntax.h": "c",
+    "penny.h": "c"
+  }
+}
